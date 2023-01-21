@@ -1,0 +1,87 @@
+Agenda : 
+
+1. Convolution Neural Networks
+2. Implementation of this in pytorch, keras(tensorflow)
+3. Recurrent Neural Networks
+
+
+Task : Crawl some 1000 images from the internet.
+       Few of them should have human faces and the rest with no faces
+       Convert these images to pixels and build a classifier (SVM)
+	and calculate its precision and recall.
+
+
+Vanilla Neural Networks for Vision
+__________________________________
+
+	The objective is to detect whether a randomly selected image has a face or not. Initially there were traditional algorithms which either used the raw image and build a classifier or we provided certain features to the classifiers and tried to solve the problem but both these techniques were not effective, especially when you try to scale your problem to an image which is no more black and white and not of low resolution. 
+	
+	In the networks which we have seen till now we have observed that there were only 28 * 28 pixels and they were black and white. 
+
+	The neuron in a fully connected hidden layer only say 784 incoming neurons. 
+
+	Lets say what if we have an image which is 200 * 200 pixel image and coloured. What would be the input layer size ?
+
+	200 * 200 * 3 = 120,000 weights
+
+	This full connectivity is wasteful plus having these many number of weights means you require more optimization which eventually requires more data and there are high chances of overfitting. 
+
+	The convolution neural network takes the advantage of the fact that we are analyzing images and hence we do not need to have those high no of parameters and hence it reduced parameters sensibly. 
+Moreover inspired by human vision, the layers of CNN have neurons arranged in three dimension so each layer has a width, height and depth. 
+
+	We see that the neurons in CNN is connected to a small, local region of the preceeding layer, which avoids wastefullness of FCN. 
+So we observe that a 3-d volume of information produces a new three dimensional volume of information. 
+
+	The idea is inspired from the cat experiment which demonstrated that there are several layers of neurons in our visual cortex and the first layer does the job of simple feature detection and then moving deep the abstraction happens. 
+
+	The first concept is to use filters. A filter is a feature detector. Lets say that if we want to detect vertical and horizontal lines in the image then one approach can be to use appropriate feature detectors (filters) for detecting the vertical lines and horizontal lines. We use multiple filters such as above to generate a new matrix which we call as a feature map. This feature map indicates where in the image you found the vertical line for one filter, the other feature map indicates where in the image you found horizontal lines for the other filter and so on. Hence as many filters you have those many feature maps would be generated. This operation is called as convolution. 
+
+	Given an input image we apply several filters to generate feature maps. Remember when we are applying filters from the next layer, they dont just operate on a single feature map. They operate on the entire volume of feature maps that has been generated at a particular layer. For example to detect a face we require a filter to convolve over 4 set of feature maps where one feature represents mouth, one represents nose and 2 represents eyes. This also necessary for RGB images which has the third dimension as depth. For RGB we will have three feature maps.
+
+	We also introduce a concept of padding which is nothing but a hyperparameter to your filters which assists the filters to focus more on the corners of the image with the same intensity as towards the centre of images. 
+
+	Max Pooling
+	___________
+
+	To aggresively reduce the dimensions of feature maps we insert a max pooling layer after a convolution layer. The idea is to break up the feature map into equal sized tiles and then use the maximum value of the tile to create a condensed feature map. This use two hyperparameters, filter size and stride. 
+
+
+Task :
+
+1. Scale the architecture to AlexNet Architecture
+https://www.researchgate.net/publication/328948573/figure/tbl1/AS:693048010874880@1542246930110/The-configurations-of-the-Alexnet-and-ZF-5net.png
+
+Several other CNN based architectures
+
+1. VGGNet
+2. ResNet - Residual Connections
+
+Applications
+
+1. Object Detection - R-CNN
+			Fast R-CNN
+			Faster R-CNN
+			YOLO
+
+2. Image Segmentation - MASK R-CNN
+			U-NET
+
+
+Transfer Learning
+_________________
+
+	It takes advantage of this library of existing visual elements contained within the feature maps of a pre-trained CNN and re purpose them to become specialized in identifying new classes of objects. 
+
+
+Task :
+
+1. Build a vanilla Deep Neural Network on CIFAR10
+2. Compare it with the LeNet Architecture and AlexNet Architecture. 
+
+For the dataset download and reading visit :
+https://www.cs.toronto.edu/~kriz/cifar.html
+
+
+Agenda : 
+
+1. Recurrent Neural Networks & Text Classification

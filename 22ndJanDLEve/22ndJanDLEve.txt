@@ -1,0 +1,132 @@
+Agenda :
+
+1. Recurrent Neural Networks
+	Uptil now we have worked with fixed size inputs only. In certain cases when we have sequential data of variable length then these networks break down. When analyzing a sequence, if the sequence is of the same size as the input layer, then it perfroms as expected. If the sequence is smaller than the input size even then it can be dealt with padding the sequence and making it equal to the input layer dimensions. But the moment the sequence size increase the size of input layer, the feed forward network breaks. 
+
+	We need to find an elegant solution to variable size inputs plus sequential networks which can preserve the history of the sequence such that while predicting the output of current input it also remembers the input from the previous time step. 
+
+	How to identify whether its a sequential data ?
+
+	If the observations in your data have a relation with each other,
+	then there is a sequential information. 
+
+	For example :
+
+	Lets say I have 10 images and I have to classify them into cats
+	and dogs
+
+	Image 1 goes into CNN which predicts cat
+	Image 2 goes into CNN which predicts ??
+
+	Since for CNN to predict Image 2 as a dog/cat it doesnt require to 
+	remember what it predicted last. Hence this is not a sequential 
+	data.
+
+
+	Example :
+
+	Wednesday stock price : 74$
+	Thursday stock price : 72$
+	Friday stock price : ???
+
+	For you to predict the stock price of friday you need to 
+	remember the price of stock on thrusday and wednesday. Hence this 
+	is a seuqential data. 
+
+
+	For us to solve this sort of problem where we need to remember the
+	past inputs and predictions we need to maintain some sort of
+	memory over the span of reading input sequence. As the model reads	
+	the input, the model should be modifying its memory bank by taking 	
+	into account the information it observes on the way. By the time it 
+	has reached the end of input sequence, the internal memory 
+	contains key pieces of information which can be used to produce 
+	either a label or an output sequence. 
+
+	The problem with Feed forward neural networks is that they dont 
+	have this memory element. They are "stateless". Moreover the feed
+	forward network is a static structure. To solve the problems of
+	sequential data we need stateful networks. 
+
+	This is done by recurrent neural networks. 
+
+	The RNN have a special type of layer called as recurrent layer, 
+	which enables to maintain the state between the network layers. 
+
+	Because of the weight of RNN being very small while training, the
+	value of the derivative approaches zero while we backpropagate 
+	through deep layers of RNN. The gradient diminishes quickly when 
+	you compute for several time steps in the past. This is called 
+	as the vanishing gradient problem and this limits the learning
+	capability of RNN's. 
+
+	To address this issue we have networks like LSTM's which 
+	have a separate memory cell which is operated by gates in the
+	network. The gates are operated by weights which are learnt
+	while training. 
+
+	The memory cell is the core component of LSTM architecture. This
+	memory cell holds the critical information that it has learned over
+	time, and the network is designed to maintain this information
+	over many time steps. 
+
+	At every time step the LSTM unit modifies this memory cell with
+	new information in three different phases. 
+
+	First phase, the forget gate, which is responsible to get rid of 
+	some information that has become stale. We perform this operation
+	by concatenating the input of the current time step and the 
+	hidden state of the previous step and apply a sigmoid layer
+	to the concatenated output. Now this is then approximated in a 
+	bitwise manner to the forget gate. In this way we have figured out
+	the information to keep in the old state and what to erase. 
+
+
+	Second phase, the write gate, which thinks what information we 
+	would like to write into the memory state. This is broken into 
+	two major functions. The first function figures out what 
+	information to write into the state which is computed using a 
+	tanh layer. The second function then figures out which components
+	of the output of tanh layer we want to include into the new 
+	state. And thats how the new state is modified with the information
+	of current input. 
+
+	Third phase, output gate, which decides what part of the 
+	current input and the memory cell should be propagate to the 
+	next hidden state. 
+
+	Since the memory cell is operated by gates which are having weights
+	learnt by the gradient descent way and the memory from the past
+	is managed solely by memory cell. This helps LSTM to remember long
+	term dependencies without any issues with the gradients. 
+
+
+	GRU was then proposed which had less number of gates compared to
+	LSTM's and that helped to prevent overfitting as less parameters
+	were required. 
+
+Task :
+
+1. Change the embedding size to 64, 128
+2. Instead of LSTM try RNN(Use SimpleRNN) and GRU
+3. Stack one or more LSTM, GRU or RNN layer with dropout layer and run
+	the notebook to see its effect on accuracy. 
+
+
+Agenda :
+
+1. Advanced Neural Networks (Attention based)
+2. Autoencoders
+3. Projects
+
+
+
+
+
+
+
+
+
+
+
+
